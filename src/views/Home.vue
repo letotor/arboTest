@@ -1,10 +1,14 @@
+<template>
+  <div>
+    <TreeItem />
+  </div>
+</template>
 
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue';
+import TreeItem from '../components/TreeItem.vue';
+
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style scoped>
+
+</style>

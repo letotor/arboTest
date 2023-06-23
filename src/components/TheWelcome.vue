@@ -1,15 +1,7 @@
 <template>
-    <div>
-        Welcome
-        {{ ACCESS_TOKEN }}
-    </div>
+  <div>Welcome test</div>
 </template>
 
-<script setup lang="ts">
- const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

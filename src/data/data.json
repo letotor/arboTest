@@ -1,0 +1,44 @@
+{
+  "data": {
+    "windFarms": [
+      {
+        "id": "8f0b9ef5-db37-4adc-920e-414ac85edf2d",
+        "name": "Allenay",
+        "displayName": "Parc Allenay",
+        "windTurbines": [
+          {
+            "id": "5ae29f62-69d9-4d30-a1e2-b69e3633d288",
+            "name": "E3",
+            "displayName": "Allenay E3 (237290)",
+            "windFarm": "8f0b9ef5-db37-4adc-920e-414ac85edf2d"
+          },
+          {
+            "id": "5ae29f62-69d9-4d30-a1e2-b69e3633d289",
+            "name": "E4",
+            "displayName": "Allenay E4 (237290)",
+            "windFarmId": "8f0b9ef5-db37-4adc-920e-414ac85edf2d"
+          }
+        ]
+      },
+      {
+        "id": "8f0b9ef5-db37-4adc-920e-414ac85edf2e",
+        "name": "Niozelles",
+        "displayName": "Parc Niozelles",
+        "windTurbines": [
+          {
+            "id": "5ae29f62-69d9-4d30-a1e2-b69e3633d289",
+            "name": "E5",
+            "displayName": "Allenay E4 (237291)",
+            "windFarmId": "8f0b9ef5-db37-4adc-920e-414ac85edf2e"
+          },
+          {
+            "id": "5ae29f62-69d9-4d30-a1e2-b69e3633d289",
+            "name": "E6",
+            "displayName": "Allenay E6 (237292)",
+            "windFarmId": "8f0b9ef5-db37-4adc-920e-414ac85edf2e"
+          }
+        ]
+      }
+    ]
+  }
+}
