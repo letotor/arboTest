@@ -3994,6 +3994,11 @@ vue-template-compiler@^2.7.14:
     de-indent "^1.0.2"
     he "^1.2.0"
 
+vue-treeselect@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/vue-treeselect/-/vue-treeselect-1.0.7.tgz#589f689019b6c91d1b3bba946dbdb63565b13f05"
+  integrity sha512-NNtr0elV/diw9KSmkiXhKzUaG9FPx8PSg5dHXcl288ip94qfUyXnA5M6mgtWREMlw4Ufs4+lQHDuCONy7sIccg==
+
 vue-tsc@^1.6.5:
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-1.6.5.tgz#cd18804b12087c300b6c9ee2a1da41a63f11103e"
@@ -4002,6 +4007,11 @@ vue-tsc@^1.6.5:
     "@volar/vue-language-core" "1.6.5"
     "@volar/vue-typescript" "1.6.5"
     semver "^7.3.8"
+
+vue3-tree-vue@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/vue3-tree-vue/-/vue3-tree-vue-1.0.20.tgz#03cf2b9188ef9c8bece9fc8b03bd32c298107299"
+  integrity sha512-EUMArqJBm+WDKNiPwDpnZB+elFXKBMCeyZk+1DlGPLGYTGtjR53azxrpALMRm33VT4MOxM2uCOHpOVuaLxsZsA==
 
 vue@^3.3.4:
   version "3.3.4"

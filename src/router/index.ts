@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -7,7 +6,27 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import('../views/Home.vue'),
+    },
+    {
+      path: '/tree',
+      name: 'tree',
+      component: () => import('../components/TreeGenerique.vue'),
+    },
+    {
+      path: '/treeitem',
+      name: 'treeItem',
+      component: () => import('../components/TreeItem.vue'),
+    },
+    {
+      path: '/treedim',
+      name: 'treeDim',
+      component: () => import('../components/TreeDim.vue'),
+    },
+     {
+      path: '/treeview',
+      name: 'treeView',
+      component: () => import('../components/TreeViewTest.vue'),
     }
   ]
 })

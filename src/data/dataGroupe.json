@@ -1,0 +1,123 @@
+{
+  "id": "0",
+  "name": "WindFarmGroupe",
+  "type": "windfarm",
+  "isGroup": true,
+  "isSelected": false,
+  "canSelected": true,
+  "children": [
+    {
+      "id": "0-1",
+      "name": "WindFarm1",
+      "type": "windFarm",
+      "isGroup": false,
+      "isSelected": false,
+      "canSelected": true ,
+      "children": [
+        {
+          "id": 3,
+          "name": "WindTurbineGroupe",
+          "type": "group",
+          "isGroup": true,
+          "children": [
+            {
+              "id": 4,
+              "name": "WindTurbine1",
+              "type": "windTurbine",
+              "children": [
+                { 
+                  "id": 14,
+                  "name": "Helice 1"
+                },
+                {
+                  "id": 15,
+                  "name": "Helice 2"
+                }
+              ],
+              "isSelected": false,
+              "canSelected": true
+            },
+            {
+              "id": 5,
+              "name": "WindTurbine2",
+              "type": "windTurbine",
+              "children": [],
+              "isSelected": false,
+              "canSelected": true
+            },
+            {
+              "id": 6,
+              "name": "WindTurbine3",
+              "type": "windTurbine",
+              "children": [],
+              "isSelected": false,
+              "canSelected": true
+            }
+          ],
+          "isSelected": false,
+          "canSelected": true
+        },
+        {
+          "id": 7,
+          "name": "SubstationGroupe",
+          "type": "group",
+          "children": [
+            {
+              "id": 8,
+              "name": "Automates",
+              "type": "group",
+              "children": [
+                {
+                  "id": 9,
+                  "name": "RTU",
+                  "type": "automate",
+                  "children": [],
+                  "isSelected": false,
+                  "canSelected": true
+                },
+                {
+                  "id": 10,
+                  "name": "GWE",
+                  "type": "automate",
+                  "children": [],
+                  "isSelected": false,
+                  "canSelected": true
+                }
+              ],
+              "isSelected": false,
+              "canSelected": true
+            },
+            {
+              "id": 11,
+              "name": "METER",
+              "type": "substation",
+              "children": [],
+              "isSelected": false,
+              "canSelected": true
+            },
+            {
+              "id": 12,
+              "name": "LIDAT",
+              "type": "substation",
+              "children": [],
+              "isSelected": false,
+              "canSelected": true
+            }
+          ],
+          "isSelected": false,
+          "canSelected": true
+        }
+      ]
+    },
+
+    {
+      "id": "0-2", 
+      "name": "WindFarm2",
+      "type": "group",
+      "children": [],
+      "isSelected": false,
+      "canSelected": true
+    }
+  ]
+
+}

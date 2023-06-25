@@ -1,3 +1,4 @@
+// @ts-nocheck
 <template>
   <div>
     <h2>Liste des enfants</h2>
