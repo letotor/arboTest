@@ -4,7 +4,7 @@
       <li>
         <div class="flex items-center flex-row">
           <img
-            v-if="!hideShow"
+            v-if="!hideShow && props.nodes "
             class="h-10 w-10"
             :src="iconeFolderPlus"
             @click.stop="toggleHideShow"
