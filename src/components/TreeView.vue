@@ -67,12 +67,12 @@ const props = defineProps<{
 }>()
 
 const node = reactive<NodeTree>({
-  id: props.id,
-  name: props.name,
-  isGroupe: props.isGroupe,
-  isSelected: props.isSelected,
-  canSelected: props.canSelected,
-  nodes: props.nodes
+  id: treeStore.tree.id,
+  name: treeStore.tree.name,
+  isGroupe: treeStore.tree.isGroupe,
+  isSelected: treeStore.tree.isSelected,
+  canSelected: treeStore.tree.canSelected,
+  nodes: treeStore.tree.nodes
 }
 )
 
