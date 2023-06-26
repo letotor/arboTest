@@ -4,7 +4,7 @@
       <li>
         <div class="flex items-center flex-row">
           <img
-            v-if="!hideShow && props.nodes "
+            v-if="!hideShow && node.nodes "
             class="h-4 w-4"
             :src="iconeFolderPlus"
             @click.stop="toggleHideShow"
@@ -12,16 +12,16 @@
           <img v-else class="h-4 w-4" :src="iconeFolderMinus" @click.stop="toggleHideShow" />
           <input
             class="check-box"
-            :id="props.id"
+            :id="node.id"
             type="checkbox"
-            v-if="props.canSelected"
-            :checked="isSelected"
+            v-if="node.canSelected"
+            :checked="node.isSelected"
             @change.stop="checkSelected(id)"
           />
 
-          <label class="text-white" :for="props.id">
+          <label class="text-white" :for="node.id">
             <span class="ml-2">{{ props.name }}</span>
-            <span> - isCheck : {{ isSelected }} - groupe : {{ props.isGroupe }} </span>
+            <span> - isCheck : {{ node.isSelected }} - groupe : {{ node.isGroupe }} </span>
           </label>
         </div>
       </li>
@@ -76,6 +76,9 @@ const node = reactive<NodeTree>({
 }
 )
 
+watch(() => node.isSelected, (newValue, oldValue) => {
+  console.debug('watch isSelected', newValue, oldValue)
+})
 
 function toggleHideShow(): void {
   hideShow.value = !hideShow.value
