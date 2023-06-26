@@ -20,12 +20,12 @@ import type NodeTree from '../interfaces/nodeTree.interface'
 import { useTreeStore } from '@/stores/treeStore'
 
 const treeData = reactive<NodeTree>({
-  id: 'root',
-  name: 'root',
-  isGroupe: true,
-  isSelected: false,
-  canSelected: true,
-  nodes: []
+    id: '',
+    name: '',
+    isGroupe: true,
+    isSelected: false,
+    canSelected: true,
+    nodes: []
 })
 
 const treeStore = useTreeStore()
