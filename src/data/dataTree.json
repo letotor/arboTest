@@ -5,7 +5,7 @@
     "isGroupe": true,
     "isSelected": false,
     "canSelected": true,
-    "children": [
+    "nodes": [
       {
         "id": "0-1",
         "type": "windfarm",
@@ -13,7 +13,7 @@
         "isGroupe": false,
         "isSelected": false,
         "canSelected": true,
-        "children": [
+        "nodes": [
           {
             "id": "0-1-0",
             "type": "windturbine",
@@ -21,7 +21,7 @@
             "isGroupe": true,
             "isSelected": false,
             "canSelected": true,
-            "children": [
+            "nodes": [
               {
                 "id": "0-1-0-1",
                 "type": "windturbine",
@@ -55,7 +55,7 @@
             "isGroupe": false,
             "isSelected": false,
             "canSelected": true,
-            "children": [
+            "nodes": [
               {
                 "id": "0-1-1-0",
                 "type": "device",
@@ -63,7 +63,7 @@
                 "isGroupe": true,
                 "isSelected": false,
                 "canSelected": true,
-                "children": [
+                "nodes": [
                   {
                     "id": "0-1-1-0-1",
                     "type": "device",

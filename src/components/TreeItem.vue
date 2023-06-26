@@ -1,4 +1,3 @@
-// @ts-nocheck
 <template>
   <div>
     <h2>Liste des enfants</h2>
@@ -18,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref,reactive,  watch } from 'vue';
+import { reactive } from 'vue';
 
 import jsonData from '../data/data.json';
 
