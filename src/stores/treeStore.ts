@@ -43,5 +43,11 @@ export const useTreeStore = defineStore('tree', {
     tree: (state) => state.treeData // Renommé de "tree" à "treeData"
   },
 
-  actions: {}
+  actions: {
+    setTreeSelectNode(node: NodeTree) {
+      this.treeSelect = node
+    }
+
+
+  }
 })
