@@ -1,64 +1,49 @@
 import { defineStore } from 'pinia'
-import NodeTree from '../interfaces/nodeTree.interface'
-
-interface TreeState {
-  treeSelectData: NodeTree
-  treeSelectListData: NodeTree[]
-  treeAllData: NodeTree[]
-}
+import type NodeTree from '@/interfaces/nodeTree.interface'
 
 export const useTreeStore = defineStore('tree', {
-  state: (): TreeState => ({
-    treeSelectData: {
-      id: '0',
-      name: '',
-      type: 'windfarm',
-      isGroupe: false,
-      isSelected: false,
-      canSelected: false
-    },
-    treeSelectListData: [],
-    treeAllData: [
-      {
-        id: '0-1',
-        type: 'windfarm',
-        name: 'WindFarm1',
-        isGroupe: false,
-        isSelected: false,
-        canSelected: true,
-        nodes: [
-          {
-            id: '0-1-0',
-            type: 'windturbine',
-            name: 'WindTurbines',
-            isGroupe: true,
-            isSelected: false,
-            canSelected: true
-          }
-        ]
-      }
-    ]
+  state: () => ({
+    tree: [] as NodeTree[],
+    treeSelectNode: null as NodeTree | null,
+    treeSelectList: [] as NodeTree[],
   }),
-
   getters: {
-    treeSelect: (state) => state.treeSelectData,
-    treeSelectList: (state) => state.treeSelectListData,
-    tree: (state) => state.treeAllData
+    getTree: (state) => state.tree,
+    getTreeSelectNode: (state) => state.treeSelectNode,
+    getTreeSelectList: (state) => state.treeSelectList,
   },
-
   actions: {
-    // add element where is checked to the list
-    addTreeSelectList(tree: NodeTree) {
-      this.treeSelectListData = [...this.treeSelectListData, tree]
+    setTree(tree: NodeTree[]) {
+      this.tree = tree
+    },
+    setTreeSelect(node: NodeTree | null) {
+      this.treeSelectNode = node
+    },
+    addTreeSelectList(node: NodeTree) {
+      this.treeSelectList.splice(0, 0, node);
+    },
+    removeTreeSelectList(node: NodeTree) {
+      this.treeSelectList = this.treeSelectList.filter((n) => n.id !== node.id)
     },
 
-    // is uncheck remove element
-    removeTreeSelectList(tree: NodeTree) {
-      this.treeSelectListData.splice(this.treeSelectListData.indexOf(tree), 1)
-    },
-   // add last element where is checked to the list
-    setTreeSelect(tree: NodeTree) {
-      this.treeSelectData = tree
+    selectGroupAndChildren(group: NodeTree) {
+      // Sélectionnez le groupe lui-même
+      group.isSelected = true;
+  
+      // Parcourez tous les enfants du groupe
+      const stack = [...group.nodes];
+      while (stack.length > 0) {
+        const node = stack.pop();
+        if (node) {
+          // Sélectionnez l'enfant
+          node.isSelected = true;
+  
+          // Si l'enfant est un groupe, ajoutez ses enfants à la pile pour les sélectionner également
+          if (node.isGroupe && node.nodes) {
+            stack.push(...node.nodes);
+          }
+        }
+      }
     }
-  }
+  },
 })

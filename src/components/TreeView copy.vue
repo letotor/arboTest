@@ -15,13 +15,13 @@
             :id="props.id"
             type="checkbox"
             v-if="props.canSelected"
-            :checked="isSelected"
-            @change.stop="checkSelected(id)"
+            :checked="props.isSelected"
+            @change.stop="checkSelected"
           />
 
           <label class="text-white" :for="props.id">
             <span class="ml-2">{{ props.name }}</span>
-            <span> - isCheck : {{ isSelected }} - groupe : {{ props.isGroupe }} </span>
+            <span> - isCheck : {{ props.isSelected }} - groupe : {{ props.isGroupe }} </span>
           </label>
         </div>
       </li>
@@ -43,8 +43,9 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import TreeView from './TreeView.vue'
 import iconeFolderPlus from '@/assets/images/folder-plus-icone8.png'
 import iconeFolderMinus from '@/assets/images/folder-open-icone8.png'
@@ -52,10 +53,11 @@ import type NodeTree from '@/interfaces/nodeTree.interface'
 
 import { useTreeStore } from '@/stores/treeStore'
 import { useCheckboxStore } from '../stores'
-
 const hideShow = ref(false)
 
 const treeStore = useTreeStore()
+const checkStore = useCheckboxStore();
+console.debug('init treeStore ', treeStore.tree)
 
 const props = defineProps<{
   id: string
@@ -66,46 +68,50 @@ const props = defineProps<{
   nodes?: NodeTree[]
 }>()
 
-const node = reactive<NodeTree>({
-  id: props.id,
-  name: props.name,
-  isGroupe: props.isGroupe,
-  isSelected: props.isSelected,
-  canSelected: props.canSelected,
-  nodes: props.nodes
-}
-)
+const updateTreeSelect = computed(() => {
+  if (treeStore.treeSelectNode) {
+    return treeStore.treeSelectNode
+  }
+  return null
+})
 
+// watchEffect(() => {
+//   if (updateTreeSelect.value) {
+//     treeStore.setTreeSelect(updateTreeSelect.value);
+//   }
+// });
 
 function toggleHideShow(): void {
   hideShow.value = !hideShow.value
+  console.log('toggleHideShow', hideShow.value)
 }
 
-function checkSelected(id : string): void {
-
-  console.debug('checkSelected', id)
-  node.isSelected= ! node.isSelected
-  treeStore.setTree(node)
-
-  const selectedElementToUpdate = {
-    id: node.id,
-    name: node.name,
-    isGroupe: node.isGroupe,
-    isSelected: node.isSelected,
-    canSelected: node.isGroupe
+function checkSelected(e: Event) {
+  const inputElement = e.target as HTMLInputElement
+  //const inputElementParent = inputElement.parentElement as HTMLInputElement
+  const selectedElelementToUpdate = {
+    id: inputElement.id,
+    name: props.name,
+    isGroupe: props.isGroupe,
+    isSelected: inputElement.checked,
+    canSelected: props.isGroupe
   }
 
-  if (selectedElementToUpdate.isSelected) {
+  treeStore.setTreeSelect({
+    ...selectedElelementToUpdate
+  })
+
+  if (selectedElelementToUpdate.isSelected) {
     // Si c'est un groupe, sélectionnez le groupe et ses enfants
-    if (selectedElementToUpdate.isGroupe) {
-      treeStore.selectGroupAndChildren(selectedElementToUpdate)
+    if (selectedElelementToUpdate.isGroupe) {
+      treeStore.selectGroupAndChildren(selectedElelementToUpdate);
     } else {
       // Sinon, ajoutez simplement l'élément à la liste de sélection
-      treeStore.addTreeSelectList(selectedElementToUpdate)
+      treeStore.addTreeSelectList(selectedElelementToUpdate);
     }
   } else {
     // Si l'élément est désélectionné, supprimez-le de la liste de sélection
-    treeStore.removeTreeSelectList(selectedElementToUpdate)
+    treeStore.removeTreeSelectList(selectedElelementToUpdate);
   }
 }
 </script>

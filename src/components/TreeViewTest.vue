@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold">Tree View</h1>
     <tree-view
       :id="treeData.id"
-      :nodes="treeData.nodes"
+      :nodes="treeData.nodes!"
       :name="treeData.name"
       :isGroupe="treeData.isGroupe"
       :isSelected="treeData.isSelected"
@@ -17,14 +17,18 @@
 import { reactive, watchEffect } from 'vue'
 import TreeView from './TreeView.vue'
 import type NodeTree from '../interfaces/nodeTree.interface'
+import { useTreeStore } from '@/stores/treeStore'
 
-const treeData: NodeTree = reactive({
+const treeData = reactive<NodeTree>({
   id: 'root',
   name: 'root',
   isGroupe: true,
   isSelected: false,
-  canSelected: true
+  canSelected: true,
+  nodes: []
 })
+
+const treeStore = useTreeStore()
 
 watchEffect(async () => {
   try {
@@ -34,6 +38,8 @@ watchEffect(async () => {
     }
     const jsonData = await response.json()
     Object.assign(treeData, jsonData) // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
+    console.log(treeData)
+    treeStore.setTree(treeData)
     console.log('data', treeData)
   } catch (error) {
     console.error('Erreur :', error)
