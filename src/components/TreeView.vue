@@ -47,18 +47,13 @@ import { ref } from 'vue'
 import TreeView from './TreeView.vue'
 import iconeFolderPlus from '@/assets/images/folder-plus-icone8.png'
 import iconeFolderMinus from '@/assets/images/folder-open-icone8.png'
+import type NodeTree from '@/interfaces/nodeTree.interface';
 
-type ElementType = 'windfarm' | 'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
+import {useTreeStore} from '@/stores/treeStore';
 
-interface NodeTree {
-  id: string
-  type?: ElementType
-  name: string
-  isGroupe: boolean
-  isSelected: boolean
-  canSelected: boolean
-  nodes?: NodeTree[]
-}
+const treeStore  = useTreeStore();
+console.debug(treeStore.tree);
+
 defineProps<{
   id: string
   name: string

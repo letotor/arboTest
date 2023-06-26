@@ -15,7 +15,7 @@
     "tailwind:watch": "npx tailwindcss -i  src/assets/tailwind.css -o dist/assets/ouput.css --watch"
   },
   "dependencies": {
-    "pinia": "^2.1.3",
+    "pinia": "^2.1.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.2",
     "vue-treeselect": "^1.0.7",

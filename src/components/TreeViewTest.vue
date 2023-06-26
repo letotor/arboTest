@@ -16,18 +16,7 @@
 <script setup lang="ts">
 import { reactive, computed, watchEffect } from 'vue'
 import TreeView from './TreeView.vue'
-
-type ElementType = 'windfarm' | 'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
-
-interface NodeTree {
-  id: string
-  type?: ElementType
-  name: string
-  isGroupe: boolean
-  isSelected: boolean
-  canSelected: boolean
-  nodes?: NodeTree[]
-}
+import type NodeTree from '../interfaces/nodeTree.interface';
 
 const treeData: NodeTree = reactive({
   id: 'root',
