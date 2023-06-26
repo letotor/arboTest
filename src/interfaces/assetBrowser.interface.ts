@@ -1,4 +1,1 @@
-export interface assetBrowserInterface {
-
-    
-}
+export interface assetBrowserInterface {}

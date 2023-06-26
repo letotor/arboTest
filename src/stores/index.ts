@@ -1,1 +1,1 @@
-export * from './treeStore';
+export * from './treeStore'

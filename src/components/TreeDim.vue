@@ -10,7 +10,11 @@
         <ul>
           <li v-for="child in treeData.children" :key="child.id">
             <div class="node" :class="{ selected: child.isSelected }">
-              <input type="checkbox" v-model="child.isSelected" :disabled="!canSelectChild(child)" />
+              <input
+                type="checkbox"
+                v-model="child.isSelected"
+                :disabled="!canSelectChild(child)"
+              />
               <i class="icon" :class="getIconClass(child.type)"></i>
               <label>{{ child.name }}</label>
             </div>
@@ -33,95 +37,83 @@
 <script setup lang="ts">
 import { reactive, computed, onMounted, watchEffect } from 'vue'
 
-type ElementType = "windfarm" | "windturbine" | "lidar" | "meter" | "RTU" | "GWE";
+type ElementType = 'windfarm' | 'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
 
 interface NodeTree {
-  id: string;
-  type?: ElementType;
-  name: string;
-  isGroupe: boolean;
-  isSelected: boolean;
-  canSelected: boolean;
-  children?: NodeTree[];
+  id: string
+  type?: ElementType
+  name: string
+  isGroupe: boolean
+  isSelected: boolean
+  canSelected: boolean
+  children?: NodeTree[]
 }
 
 const treeData: NodeTree = reactive({
-  id : "root",
-  name: "root",
+  id: 'root',
+  name: 'root',
   isGroupe: true,
   isSelected: false,
   canSelected: true,
-  children: [],
-});
-
-
+  children: []
+})
 
 watchEffect(async () => {
   try {
-    const response = await fetch('src/data/dataTree.json');
+    const response = await fetch('src/data/dataTree.json')
     if (!response.ok) {
-      throw new Error('Erreur lors de la récupération du fichier JSON');
+      throw new Error('Erreur lors de la récupération du fichier JSON')
     }
-    const jsonData = await response.json();
-    Object.assign(treeData, jsonData); // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
-    console.log('data', treeData);
-
-    
+    const jsonData = await response.json()
+    Object.assign(treeData, jsonData) // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
+    console.log('data', treeData)
   } catch (error) {
-    console.error('Erreur :', error);
+    console.error('Erreur :', error)
   }
-});
-
-
-
+})
 
 function isNodeSelected(node: NodeTree): boolean {
-  return node.isSelected;
+  return node.isSelected
 }
 
 /**
  * Retourne true si le noeud peut être sélectionné si tous ses enfants sont sélectionnés
- * @param node 
- * @returns 
+ * @param node
+ * @returns
  */
 function canSelectNode(node: NodeTree): boolean {
   if (node.isGroupe) {
-    return node.children?.every((child) => child.isSelected) ?? false;
+    return node.children?.every((child) => child.isSelected) ?? false
   } else {
-    return node.canSelected;
+    return node.canSelected
   }
 }
 
-
-
-
 function hasChildNodes(node: NodeTree): boolean {
-  return Boolean(node.children && node.children.length > 0);
+  return Boolean(node.children && node.children.length > 0)
 }
-
 
 function canSelectChild(child: NodeTree): boolean {
   // Vérifier si l'enfant peut être sélectionné en fonction de la règle spécifique
-  return child.canSelected;
+  return child.canSelected
 }
-
 
 function getIconClass(type?: ElementType): string {
   switch (type) {
-    case "windfarm":
-      return "windfarm-icon";
-    case "windturbine":
-      return "windturbine-icon";
-    case "lidar":
-      return "lidar-icon";
-    case "meter":
-      return "meter-icon";
-    case "RTU":
-      return "rtu-icon";
-    case "GWE":
-      return "gwe-icon";
+    case 'windfarm':
+      return 'windfarm-icon'
+    case 'windturbine':
+      return 'windturbine-icon'
+    case 'lidar':
+      return 'lidar-icon'
+    case 'meter':
+      return 'meter-icon'
+    case 'RTU':
+      return 'rtu-icon'
+    case 'GWE':
+      return 'gwe-icon'
     default:
-      return "";
+      return ''
   }
 }
 </script>

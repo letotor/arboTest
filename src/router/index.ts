@@ -6,27 +6,27 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/Home.vue'),
+      component: () => import('../views/Home.vue')
     },
     {
       path: '/tree',
       name: 'tree',
-      component: () => import('../components/TreeGenerique.vue'),
+      component: () => import('../components/TreeGenerique.vue')
     },
     {
       path: '/treeitem',
       name: 'treeItem',
-      component: () => import('../components/TreeItem.vue'),
+      component: () => import('../components/TreeItem.vue')
     },
     {
       path: '/treedim',
       name: 'treeDim',
-      component: () => import('../components/TreeDim.vue'),
+      component: () => import('../components/TreeDim.vue')
     },
-     {
+    {
       path: '/treeview',
       name: 'treeView',
-      component: () => import('../components/TreeViewTest.vue'),
+      component: () => import('../components/TreeViewTest.vue')
     }
   ]
 })

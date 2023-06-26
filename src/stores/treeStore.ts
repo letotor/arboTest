@@ -2,13 +2,14 @@ import { defineStore } from 'pinia'
 import NodeTree from '../interfaces/nodeTree.interface'
 
 interface TreeState {
-  treeSelect: NodeTree
-  treeData: NodeTree[]
+  treeSelectData: NodeTree
+  treeSelectListData: NodeTree[]
+  treeAllData: NodeTree[]
 }
 
 export const useTreeStore = defineStore('tree', {
   state: (): TreeState => ({
-    treeSelect: {
+    treeSelectData: {
       id: '0',
       name: '',
       type: 'windfarm',
@@ -16,7 +17,8 @@ export const useTreeStore = defineStore('tree', {
       isSelected: false,
       canSelected: false
     },
-    treeData: [
+    treeSelectListData: [],
+    treeAllData: [
       {
         id: '0-1',
         type: 'windfarm',
@@ -39,15 +41,24 @@ export const useTreeStore = defineStore('tree', {
   }),
 
   getters: {
-    treeSelectNode: (state) => state.treeSelect,
-    tree: (state) => state.treeData // Renommé de "tree" à "treeData"
+    treeSelect: (state) => state.treeSelectData,
+    treeSelectList: (state) => state.treeSelectListData,
+    tree: (state) => state.treeAllData
   },
 
   actions: {
-    setTreeSelectNode(node: NodeTree) {
-      this.treeSelect = node
+    // add element where is checked to the list
+    addTreeSelectList(tree: NodeTree) {
+      this.treeSelectListData = [...this.treeSelectListData, tree]
+    },
+
+    // is uncheck remove element
+    removeTreeSelectList(tree: NodeTree) {
+      this.treeSelectListData.splice(this.treeSelectListData.indexOf(tree), 1)
+    },
+   // add last element where is checked to the list
+    setTreeSelect(tree: NodeTree) {
+      this.treeSelectData = tree
     }
-
-
   }
 })

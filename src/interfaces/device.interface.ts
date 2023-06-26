@@ -1,3 +1,3 @@
-export interface deviceInterface   {
-    type  : 'windTurbine' | 'subStation' | 'otherDevice';
+export interface deviceInterface {
+  type: 'windTurbine' | 'subStation' | 'otherDevice'
 }

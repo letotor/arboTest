@@ -1,50 +1,71 @@
 <template>
   <div class="">
-    <div class="text-blue-800 text-3xl">{{componentName}}</div>h1>
+    <div class="text-blue-800 text-3xl">{{ componentName }}</div>
+    h1>
     <br />
     <ul class="">
       <li v-for="item in items" :key="item.id" @click.stop="handleItemClick(item)">
-        <input :id="item.id.toString()" type="checkbox" :checked="item?.selected"  />
+        <input :id="item.id.toString()" type="checkbox" :checked="item?.selected" />
         <label :for="item.id.toString()" class="flex items-center">
-          <img v-if="item.device=='Mobile'" src="../assets/images/folder.png" alt="Image" class="w-4 h-4 mr-2" />
-          <img v-else-if="item.device=='Desktop'" src="../assets/images/windturbine.png" alt="Image" class="w-4 h-4 mr-2" />
-          <span>{{item.name}}</span>
+          <img
+            v-if="item.device == 'Mobile'"
+            src="../assets/images/folder.png"
+            alt="Image"
+            class="w-4 h-4 mr-2"
+          />
+          <img
+            v-else-if="item.device == 'Desktop'"
+            src="../assets/images/windturbine.png"
+            alt="Image"
+            class="w-4 h-4 mr-2"
+          />
+          <span>{{ item.name }}</span>
         </label>
-        
+
         <span class="flex items-center">
           <img src="../assets/images/cheveron.png" alt="Image" class="w-2 h-2 mr-2" />
-          <span>{{item.name}}</span>
+          <span>{{ item.name }}</span>
         </span>
-        
+
         <ul v-if="item.children && item.children.length">
-          <li v-for="child in item.children" :key="child.id" :class="{ selected: isSelected(child) }" @click.stop="handleItemClick(child)">
+          <li
+            v-for="child in item.children"
+            :key="child.id"
+            :class="{ selected: isSelected(child) }"
+            @click.stop="handleItemClick(child)"
+          >
             <span class="flex items-center">
               <input :id="child.id.toString()" type="checkbox" :checked="child.selected" />
-              <img v-if="child.device=='Mobile'" src="../assets/images/folder.png" alt="Image" class="w-4 h-4 mr-2" />
-              <img v-else-if="child.device=='Desktop'" src="../assets/images/windturbine.png" alt="Image" class="w-4 h-4 mr-2" />
+              <img
+                v-if="child.device == 'Mobile'"
+                src="../assets/images/folder.png"
+                alt="Image"
+                class="w-4 h-4 mr-2"
+              />
+              <img
+                v-else-if="child.device == 'Desktop'"
+                src="../assets/images/windturbine.png"
+                alt="Image"
+                class="w-4 h-4 mr-2"
+              />
               <label :for="child.id.toString()" class="flex items-center">
-                <span>{{child.name}}  {{ child.device }}</span>
+                <span>{{ child.name }} {{ child.device }}</span>
               </label>
-            
             </span>
           </li>
         </ul>
       </li>
     </ul>
-   
-    
   </div>
-  </template>
-
+</template>
 
 <script setup lang="ts">
-import { createPublicKey } from 'crypto';
-import { reactive, ref ,  computed, onMounted, watchEffect } from 'vue'
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { createPublicKey } from 'crypto'
+import { reactive, ref, computed, onMounted, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-
-const componentName = ref(router.currentRoute.value.fullPath);
+const componentName = ref(router.currentRoute.value.fullPath)
 interface Item {
   id: number
   name: string
@@ -53,21 +74,18 @@ interface Item {
   selected: boolean
 }
 
-
 watchEffect(async () => {
   try {
-    const response = await fetch('src/data/dataGroupe.json');
+    const response = await fetch('src/data/dataGroupe.json')
     if (!response.ok) {
-      throw new Error('Erreur lors de la récupération du fichier JSON');
+      throw new Error('Erreur lors de la récupération du fichier JSON')
     }
-    const data = await response.json();
-    console.log('data', data);
-    
+    const data = await response.json()
+    console.log('data', data)
   } catch (error) {
-    console.error('Erreur :', error);
+    console.error('Erreur :', error)
   }
-});
-
+})
 
 const items: Item[] = [
   {
@@ -103,7 +121,7 @@ const isSelected = (item: Item): boolean => {
 }
 
 const handleItemClick = (item: Item): void => {
-  console.log('click', item);
+  console.log('click', item)
   if (item.children && item.children.length) {
     item.children.forEach((child: Item) => {
       child.selected = true

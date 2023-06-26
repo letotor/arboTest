@@ -12,7 +12,7 @@
       "type": "windFarm",
       "isGroup": false,
       "isSelected": false,
-      "canSelected": true ,
+      "canSelected": true,
       "children": [
         {
           "id": 3,
@@ -25,7 +25,7 @@
               "name": "WindTurbine1",
               "type": "windTurbine",
               "children": [
-                { 
+                {
                   "id": 14,
                   "name": "Helice 1"
                 },
@@ -111,7 +111,7 @@
     },
 
     {
-      "id": "0-2", 
+      "id": "0-2",
       "name": "WindFarm2",
       "type": "group",
       "children": [],
@@ -119,5 +119,4 @@
       "canSelected": true
     }
   ]
-
 }

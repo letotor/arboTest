@@ -1,117 +1,115 @@
 {
-    "id": "0",
-    "type": "windfarm",
-    "name": "WindFarm",
-    "isGroupe": true,
-    "isSelected": false,
-    "canSelected": true,
-    "nodes": [
-      {
-        "id": "0-1",
-        "type": "windfarm",
-        "name": "WindFarm1",
-        "isGroupe": false,
-        "isSelected": false,
-        "canSelected": true,
-        "nodes": [
-          {
-            "id": "0-1-0",
-            "type": "windturbine",
-            "name": "WindTurbines",
-            "isGroupe": true,
-            "isSelected": false,
-            "canSelected": true,
-            "nodes": [
-              {
-                "id": "0-1-0-1",
-                "type": "windturbine",
-                "name": "WindTurbine1",
-                "isGroupe": false,
-                "isSelected": false,
-                "canSelected": true
-              },
-              {
-                "id": "0-1-0-2",
-                "type": "windturbine",
-                "name": "WindTurbine2",
-                "isGroupe": false,
-                "isSelected": false,
-                "canSelected": true
-              },
-              {
-                "id": "0-1-0-3",
-                "type": "windturbine",
-                "name": "WindTurbine3",
-                "isGroupe": false,
-                "isSelected": false,
-                "canSelected": true
-              }
-            ]
-          },
-          {
-            "id": "0-1-1",
-            "type": "substation",
-            "name": "Substation",
-            "isGroupe": false,
-            "isSelected": false,
-            "canSelected": true,
-            "nodes": [
-              {
-                "id": "0-1-1-0",
-                "type": "device",
-                "name": "Automates",
-                "isGroupe": true,
-                "isSelected": false,
-                "canSelected": true,
-                "nodes": [
-                  {
-                    "id": "0-1-1-0-1",
-                    "type": "device",
-                    "name": "RTU",
-                    "isGroupe": false,
-                    "isSelected": false,
-                    "canSelected": true
-                  },
-                  {
-                    "id": "0-1-1-0-2",
-                    "type": "device",
-                    "name": "GWE",
-                    "isGroupe": false,
-                    "isSelected": false,
-                    "canSelected": true
-                  }
-                ]
-              },
-              {
-                "id": "0-1-1-1",
-                "type": "meter",
-                "name": "Meter 1",
-                "isGroupe": false,
-                "isSelected": false,
-                "canSelected": true
-              }
-            ]
-          },
-          {
-            "id": "0-1-2",
-            "type": "lidar",
-            "name": "Lidar",
-            "isGroupe": false,
-            "isSelected": false,
-            "canSelected": true
-          }
-        ]
-      },
+  "id": "0",
+  "type": "windfarm",
+  "name": "WindFarm",
+  "isGroupe": true,
+  "isSelected": false,
+  "canSelected": true,
+  "nodes": [
+    {
+      "id": "0-1",
+      "type": "windfarm",
+      "name": "WindFarm1",
+      "isGroupe": false,
+      "isSelected": false,
+      "canSelected": true,
+      "nodes": [
+        {
+          "id": "0-1-0",
+          "type": "windturbine",
+          "name": "WindTurbines",
+          "isGroupe": true,
+          "isSelected": false,
+          "canSelected": true,
+          "nodes": [
+            {
+              "id": "0-1-0-1",
+              "type": "windturbine",
+              "name": "WindTurbine1",
+              "isGroupe": false,
+              "isSelected": false,
+              "canSelected": true
+            },
+            {
+              "id": "0-1-0-2",
+              "type": "windturbine",
+              "name": "WindTurbine2",
+              "isGroupe": false,
+              "isSelected": false,
+              "canSelected": true
+            },
+            {
+              "id": "0-1-0-3",
+              "type": "windturbine",
+              "name": "WindTurbine3",
+              "isGroupe": false,
+              "isSelected": false,
+              "canSelected": true
+            }
+          ]
+        },
+        {
+          "id": "0-1-1",
+          "type": "substation",
+          "name": "Substation",
+          "isGroupe": false,
+          "isSelected": false,
+          "canSelected": true,
+          "nodes": [
+            {
+              "id": "0-1-1-0",
+              "type": "device",
+              "name": "Automates",
+              "isGroupe": true,
+              "isSelected": false,
+              "canSelected": true,
+              "nodes": [
+                {
+                  "id": "0-1-1-0-1",
+                  "type": "device",
+                  "name": "RTU",
+                  "isGroupe": false,
+                  "isSelected": false,
+                  "canSelected": true
+                },
+                {
+                  "id": "0-1-1-0-2",
+                  "type": "device",
+                  "name": "GWE",
+                  "isGroupe": false,
+                  "isSelected": false,
+                  "canSelected": true
+                }
+              ]
+            },
+            {
+              "id": "0-1-1-1",
+              "type": "meter",
+              "name": "Meter 1",
+              "isGroupe": false,
+              "isSelected": false,
+              "canSelected": true
+            }
+          ]
+        },
+        {
+          "id": "0-1-2",
+          "type": "lidar",
+          "name": "Lidar",
+          "isGroupe": false,
+          "isSelected": false,
+          "canSelected": true
+        }
+      ]
+    },
 
-      
-      {
-        "id": "0-2",
-        "type": "windfarm",
-        "name": "WindFarm2",
-        "isGroupe": false,
-        "isSelected": false,
-        "canSelected": true
-      }
-    ]
-  }
-  
+    {
+      "id": "0-2",
+      "type": "windfarm",
+      "name": "WindFarm2",
+      "isGroupe": false,
+      "isSelected": false,
+      "canSelected": true
+    }
+  ]
+}

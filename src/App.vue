@@ -1,7 +1,7 @@
 <template>
   <div class="bg-blue-400 min-h-screen">
     <nav class="">
-      <ul  class="flex align-middle justify-evenly " >
+      <ul class="flex align-middle justify-evenly">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/tree">Tree</router-link></li>
         <li><router-link to="/treegenerique">TreeGenerique</router-link></li>
@@ -22,7 +22,6 @@ import { RouterView } from 'vue-router'
 @import './assets/ouput.css';
 
 .header {
-
   background: red($color: #000000);
 }
 </style>

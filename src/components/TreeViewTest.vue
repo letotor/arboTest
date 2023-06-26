@@ -16,14 +16,14 @@
 <script setup lang="ts">
 import { reactive, computed, watchEffect } from 'vue'
 import TreeView from './TreeView.vue'
-import type NodeTree from '../interfaces/nodeTree.interface';
+import type NodeTree from '../interfaces/nodeTree.interface'
 
 const treeData: NodeTree = reactive({
   id: 'root',
   name: 'root',
   isGroupe: true,
   isSelected: false,
-  canSelected: true,
+  canSelected: true
 })
 
 watchEffect(async () => {
