@@ -4,6 +4,7 @@
       <ul class="flex align-middle justify-evenly">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/treeview">Treeview</router-link></li>
+        <li><router-link to="/treeview2">recursive-checkbox</router-link></li>
       </ul>
     </nav>
     <RouterView class="pt-16" />

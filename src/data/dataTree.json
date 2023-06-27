@@ -52,7 +52,7 @@
           "id": "0-1-1",
           "type": "substation",
           "name": "Substation",
-          "isGroupe": false,
+          "isGroupe": true,
           "isSelected": false,
           "canSelected": true,
           "nodes": [
@@ -116,7 +116,7 @@
 { 
   "id": "1",
   "type": "windfarm",
-  "name": "WindFarm",
+  "name": "photovoltaic",
   "isGroupe": true,
   "isSelected": false,
   "canSelected": true,
@@ -124,7 +124,7 @@
     {
       "id": "1-1",
       "type": "windfarm",
-      "name": "WindFarm11",
+      "name": "photovoltaic11",
       "isGroupe": false,
       "isSelected": false,
       "canSelected": true,
@@ -221,7 +221,7 @@
     {
       "id": "1-2",
       "type": "windfarm",
-      "name": "WindFarm12",
+      "name": "photovoltaic",
       "isGroupe": false,
       "isSelected": false,
       "canSelected": true

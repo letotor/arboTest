@@ -7,6 +7,7 @@ export const useTreeStore = defineStore('tree', {
     treeInit: [] as NodeTree[],
     selectedNode: null as NodeTree |null,
     manySelectedNode: [] as NodeTree[],
+    nodeMap: new Map<string, NodeTree>(),
   }),
   getters: {
     getTree: (state) => state.tree,
@@ -27,7 +28,7 @@ export const useTreeStore = defineStore('tree', {
     addSeletedNodeToList(node: NodeTree) {
       this.manySelectedNode.push(node)
     },
-    removeTreeSelectList(node: NodeTree) {
+    removeSeletedNodeToList(node: NodeTree) {
       this.manySelectedNode .splice(this.manySelectedNode.indexOf(node), 1)
     },
     clearTreeSelectList() {
@@ -51,6 +52,26 @@ export const useTreeStore = defineStore('tree', {
       }
       return null
     },
+     checkChildren(node: NodeTree): void {
+      if (node.isGroupe && node.nodes) {
+        for (const child of node.nodes) {
+          child.isSelected = true
+        this.manySelectedNode= [...this.manySelectedNode, child]
+          this.checkChildren(child)
+        }
+      }
+    },
+    UncheckChildren(node: NodeTree): void {
+      if (node.isGroupe && node.nodes) {
+        for (const child of node.nodes) {
+          child.isSelected = false
+          this.manySelectedNode.splice(this.tree.indexOf(child), 1)
+          this.UncheckChildren(child)
+        }
+      }
+    },
+
+
 
     //reourne le noeud p
     modifyNodeTree(node: NodeTree,id:string) 
@@ -70,7 +91,26 @@ export const useTreeStore = defineStore('tree', {
         if (found) return found
       }
       return null
-    }
+    },
     
+
+    
+    desactiveAllNodeByType(type: string) {
+      console.debug('desactiveAllNodeByType0', this.tree)
+     this.tree.filter((node) => node.type !== type).map((node) => {
+        node.canSelected = false
+      })
+      console.debug('desactiveAllNodeByType1', this.tree)
+      
+    //reourne le noeud p
+    },
+    activeAllNodeByType(type: string) {
+      this.tree.map((node) => {
+        if (node.type === type) {
+          node.canSelected = true
+        }
+      }
+      )
+    },
   },
 })

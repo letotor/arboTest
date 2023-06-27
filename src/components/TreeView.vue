@@ -12,6 +12,7 @@
           <img v-else class="h-4 w-4" :src="iconeFolderMinus" @click.stop="toggleHideShow" />
           <input
             class="check-box"
+            :disabled="!node.canSelected"
             :id="node.id"
             type="checkbox"
             @change="handleChangeCheckbox"
@@ -19,32 +20,30 @@
           />
           <label class="text-white" :for="node.id">
             <span class="ml-2">{{ node.name }}</span>
-            <span> - isCheck : {{ node.isSelected }} - groupe : {{ node.isGroupe }}  -  canSelected :{{node.canSelected}}</span>
-         
+            <span class="text-blue-600" v-if="node.isGroupe"> - groupe </span>
+            <span> - isCheck : {{ node.isSelected }}</span>
+
+            <span v-if="node.canSelected" :class="{ 'text-green-400': node.canSelected }">
+              - canSelected
+            </span>
           </label>
         </div>
       </li>
 
-   
       <!-- leselents enfants ici  -->
-        <li class="child" v-if="hideShow">
-          <tree-view
-           :node=node v-for="node in nodeChildren" :key="node.id"
-
-          />
-            
-        </li>
-   
+      <li class="child" v-if="hideShow">
+        <tree-view :node="node" v-for="node in nodeChildren" :key="node.id" />
+      </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive,computed } from 'vue'
+import { ref, reactive, computed, watchEffect, watch } from 'vue'
 import TreeView from './TreeView.vue'
 import iconeFolderPlus from '../assets/images/folder-plus-icone8.png'
 import iconeFolderMinus from '../assets/images/folder-open-icone8.png'
-import type NodeTree from  '../interfaces/nodeTree.interface'
+import type NodeTree from '../interfaces/nodeTree.interface'
 
 import { useTreeStore } from '../stores/treeStore'
 
@@ -52,7 +51,7 @@ const hideShow = ref(false)
 const treeStore = useTreeStore()
 
 const props = defineProps<{
-  node : NodeTree
+  node: NodeTree
 }>()
 
 // watch(() => node.isSelected, (newValue, oldValue) => {
@@ -63,36 +62,34 @@ function toggleHideShow(): void {
   hideShow.value = !hideShow.value
 }
 
-
-const allChildrenAreSelected  = computed(() => {
+const allChildrenAreSelected = computed(() => {
   console.debug('allChildrenAreSelected', nodeChildren)
-  return nodeChildren.every((node) =>node.isSelected)
+  return nodeChildren.every((node) => node.isSelected)
 })
 
-const allChildrenAreUnselected  = computed(() => {
+const allChildrenAreUnselected = computed(() => {
   console.debug('allChildrenAreUnselected', nodeChildren)
-  return nodeChildren.every((node) =>!node.isSelected)
+  return nodeChildren.every((node) => !node.isSelected)
 })
-
 
 function handleChangeCheckbox(event: Event): void {
   const target = event.target as HTMLInputElement
   const id = target.id
-  const nodeElement = treeStore.getNodebyId(id);
-  if (nodeElement){
+  const nodeElement = treeStore.getNodebyId(id)
+  if (nodeElement) {
     nodeElement.isSelected = !nodeElement.isSelected
     treeStore.modifyNodeTree(nodeElement, nodeElement.id)
-
   }
-  
 
-  console.debug('handleChangeCheckbox', id  ,nodeElement );
+  console.debug('handleChangeCheckbox', id, nodeElement)
   //checkSelected(id)
 }
 
+// Utilisation de la méthode dans votre action handleChangeCheckbox
+
 const nodeChildren = reactive<NodeTree[]>([])
-if(props.node.nodes){
-  for(let i=0; i<props.node.nodes.length;i++){
+if (props.node.nodes) {
+  for (let i = 0; i < props.node.nodes.length; i++) {
     nodeChildren.push(props.node.nodes[i])
   }
 }
@@ -101,9 +98,34 @@ nodeChildren.map((node) => {
   console.debug(`nodeChildren ${node.id}`, node.name)
 })
 
+// const isNotType = computed(() => {
 
-function checkSelected(id : string): void {
+// })
 
+watch(
+  () => props.node.isSelected,
+  (newValue, oldValue) => {
+    console.debug('watch isSelected', newValue, oldValue)
+
+    // Si c'est un groupe, sélectionnez le groupe et ses enfants
+    if (props.node.isSelected) {
+      treeStore.checkChildren(props.node)
+      treeStore.addSeletedNodeToList(props.node)
+      // si le device est de type Type alors on desactive les autres devices de type Type
+    } else {
+      // Sinon, ajoutez simplement l'élément à la liste de sélection
+      treeStore.UncheckChildren(props.node)
+      treeStore.removeSeletedNodeToList(props.node)
+    }
+
+    if(props.node.type)
+      treeStore.desactiveAllNodeByType(props.node.type)
+    
+    // si
+  }
+)
+
+function checkSelected(id: string): void {
   console.debug('checkSelected', id)
   // node.isSelected= ! node.isSelected
   // treeStore.setTree(node)
@@ -142,5 +164,8 @@ function checkSelected(id : string): void {
   margin-left: 0.4rem;
   margin-bottom: 0rem;
   border-left: 1px solid #ccc;
+}
+.canSelected {
+  color: #00ff00;
 }
 </style>

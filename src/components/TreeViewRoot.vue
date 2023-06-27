@@ -42,7 +42,10 @@ watchEffect(async () => {
     //creation du tableau de references pour les enfants a partir de NodeData
     for (let i = 0; i < treeData.length; i++) {
       treeReferences.push(treeData[i])
+      
     }
+ 
+
    // console.debug('treeReferences', treeReferences)
   } catch (error) {
     console.error('Erreur :', error)
