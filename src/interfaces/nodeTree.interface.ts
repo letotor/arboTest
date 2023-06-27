@@ -7,5 +7,5 @@ export default interface NodeTree {
   isGroupe: boolean
   isSelected: boolean
   canSelected: boolean
-  nodes?: NodeTree[] | null
+  nodes?: NodeTree[] 
 }

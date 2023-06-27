@@ -9,24 +9,9 @@ const router = createRouter({
       component: () => import('../views/Home.vue')
     },
     {
-      path: '/tree',
-      name: 'tree',
-      component: () => import('../components/TreeGenerique.vue')
-    },
-    {
-      path: '/treeitem',
-      name: 'treeItem',
-      component: () => import('../components/TreeItem.vue')
-    },
-    {
-      path: '/treedim',
-      name: 'treeDim',
-      component: () => import('../components/TreeDim.vue')
-    },
-    {
       path: '/treeview',
       name: 'treeView',
-      component: () => import('../components/TreeViewTest.vue')
+      component: () => import('../components/TreeViewRoot.vue')
     }
   ]
 })

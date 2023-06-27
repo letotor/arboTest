@@ -1,49 +1,76 @@
 import { defineStore } from 'pinia'
-import type NodeTree from '@/interfaces/nodeTree.interface'
+import type NodeTree from '../interfaces/nodeTree.interface'
 
 export const useTreeStore = defineStore('tree', {
   state: () => ({
-    tree: [] as NodeTree[],
-    treeSelectNode: null as NodeTree | null,
-    treeSelectList: [] as NodeTree[],
+    tree:  [] as NodeTree[],
+    treeInit: [] as NodeTree[],
+    selectedNode: null as NodeTree |null,
+    manySelectedNode: [] as NodeTree[],
   }),
   getters: {
     getTree: (state) => state.tree,
-    getTreeSelectNode: (state) => state.treeSelectNode,
-    getTreeSelectList: (state) => state.treeSelectList,
+    getSelectedNode: (state) => state.selectedNode,
+    getManySelectedNode: (state) => state.manySelectedNode,
   },
   actions: {
     setTree(tree: NodeTree[]) {
       this.tree = tree
     },
-    setTreeSelect(node: NodeTree | null) {
-      this.treeSelectNode = node
+    setTreeInit(tree: NodeTree[]) {
+      this.treeInit = tree
     },
-    addTreeSelectList(node: NodeTree) {
-      this.treeSelectList.splice(0, 0, node);
-    },
-    removeTreeSelectList(node: NodeTree) {
-      this.treeSelectList = this.treeSelectList.filter((n) => n.id !== node.id)
+    setSelectNode(node: NodeTree | null) {
+      this.selectedNode = node
     },
 
-    selectGroupAndChildren(group: NodeTree) {
-      // Sélectionnez le groupe lui-même
-      group.isSelected = true;
-  
-      // Parcourez tous les enfants du groupe
-      const stack = [...group.nodes];
-      while (stack.length > 0) {
-        const node = stack.pop();
-        if (node) {
-          // Sélectionnez l'enfant
-          node.isSelected = true;
-  
-          // Si l'enfant est un groupe, ajoutez ses enfants à la pile pour les sélectionner également
-          if (node.isGroupe && node.nodes) {
-            stack.push(...node.nodes);
+    addSeletedNodeToList(node: NodeTree) {
+      this.manySelectedNode.push(node)
+    },
+    removeTreeSelectList(node: NodeTree) {
+      this.manySelectedNode .splice(this.manySelectedNode.indexOf(node), 1)
+    },
+    clearTreeSelectList() {
+      this.manySelectedNode = []
+    },
+
+    getNodebyId(id: string): NodeTree | null {
+      const findNode = (node: NodeTree): NodeTree | null => {
+        if (node.id === id) return node
+        if (node.nodes) {
+          for (const child of node.nodes) {
+            const found = findNode(child)
+            if (found) return found
           }
         }
+        return null
       }
+      for (const node of this.tree) {
+        const found = findNode(node)
+        if (found) return found
+      }
+      return null
+    },
+
+    //reourne le noeud p
+    modifyNodeTree(node: NodeTree,id:string) 
+    {
+      const findNode = (node: NodeTree): NodeTree | null => {
+        if (node.id === id) return node
+        if (node.nodes) {
+          for (const child of node.nodes) {
+            const found = findNode(child)
+            if (found) return found
+          }
+        }
+        return null
+      }
+      for (const node of this.tree) {
+        const found = findNode(node)
+        if (found) return found
+      }
+      return null
     }
+    
   },
 })
