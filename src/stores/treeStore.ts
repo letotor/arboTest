@@ -6,6 +6,7 @@ export const useTreeStore = defineStore('tree', {
     tree:  [] as NodeTree[],
     treeInit: [] as NodeTree[],
     selectedNode: null as NodeTree |null,
+    selectedNodeId: undefined as string | undefined,
     manySelectedNode: [] as NodeTree[],
     nodeMap: new Map<string, NodeTree>(),
   }),
@@ -13,6 +14,7 @@ export const useTreeStore = defineStore('tree', {
     getTree: (state) => state.tree,
     getSelectedNode: (state) => state.selectedNode,
     getManySelectedNode: (state) => state.manySelectedNode,
+    
   },
   actions: {
     setTree(tree: NodeTree[]) {
@@ -23,6 +25,9 @@ export const useTreeStore = defineStore('tree', {
     },
     setSelectNode(node: NodeTree | null) {
       this.selectedNode = node
+    },
+    setSelectedNode(nodeId: string): void {
+      this.selectedNodeId = nodeId;
     },
 
     addSeletedNodeToList(node: NodeTree) {
@@ -70,7 +75,17 @@ export const useTreeStore = defineStore('tree', {
         }
       }
     },
-
+    updateTreeBySame(node: NodeTree): void {
+      const nodeType = node.type;
+      this.tree = this.tree.map((treeNode) => {
+        if (treeNode.type !== nodeType) {
+          return { ...treeNode, canSelected: false };
+        } else {
+          return { ...treeNode, canSelected: true };
+        }
+      });
+    },
+    
 
 
     //reourne le noeud p

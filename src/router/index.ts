@@ -13,11 +13,11 @@ const router = createRouter({
       name: 'treeView',
       component: () => import('../components/TreeViewRoot.vue')
     },
-    // {
-    //   path: '/treeview2',
-    //   name: 'treeView2',
-    //   component: () => import('../components/recursiveCheck.vue')
-    // },
+    {
+      path: '/treeview2',
+      name: 'treeView2',
+      component: () => import('../components/recursiveCheck.vue')
+    },
   ]
 })
 
