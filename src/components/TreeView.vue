@@ -16,7 +16,7 @@
             :id="node.id"
             type="checkbox"
             @change="handleChangeCheckbox"
-            :checked="node.canSelected && node.isSelected"
+            :checked="node.canSelected && node.isSelected || allChildrenAreSelected"
           />
           <label class="text-white" :for="node.id">
             <span class="ml-2">{{ node.name }}</span>
@@ -35,6 +35,8 @@
         <tree-view :node="node" v-for="node in nodeChildren" :key="node.id" />
       </li>
     </ul>
+
+    {{ allChildrenAreSelected }}
   </div>
 </template>
 
@@ -49,11 +51,14 @@ import { useTreeStore } from '../stores/treeStore'
 
 const hideShow = ref(false)
 const treeStore = useTreeStore()
+const nodeChildren = reactive<NodeTree[]>([])
 
 const props = defineProps<{
   node: NodeTree
 }>()
 
+
+ 
 // watch(() => node.isSelected, (newValue, oldValue) => {
 //   console.debug('watch isSelected', newValue, oldValue)
 // })
@@ -63,8 +68,14 @@ function toggleHideShow(): void {
 }
 
 const allChildrenAreSelected = computed(() => {
-  console.debug('allChildrenAreSelected', nodeChildren)
-  return nodeChildren.every((node) => node.isSelected)
+
+  
+  if(nodeChildren.length > 0){
+   
+    return nodeChildren.every((node) => node.isSelected)
+  }
+  
+  
 })
 
 const allChildrenAreUnselected = computed(() => {
@@ -87,7 +98,7 @@ function handleChangeCheckbox(event: Event): void {
 
 // Utilisation de la méthode dans votre action handleChangeCheckbox
 
-const nodeChildren = reactive<NodeTree[]>([])
+
 if (props.node.nodes) {
   for (let i = 0; i < props.node.nodes.length; i++) {
     nodeChildren.push(props.node.nodes[i])
@@ -118,10 +129,11 @@ watch(
       treeStore.removeSeletedNodeToList(props.node)
     }
 
-    if(props.node.type)
-      treeStore.desactiveAllNodeByType(props.node.type)
-    
-    // si
+
+
+
+    console.debug('----watch checkChildren', props.node,nodeChildren)
+
   }
 )
 
