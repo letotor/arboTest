@@ -76,21 +76,32 @@ export const useTreeStore = defineStore('tree', {
     //reourne le noeud p
     modifyNodeTree(node: NodeTree,id:string) 
     {
-      const findNode = (node: NodeTree): NodeTree | null => {
-        if (node.id === id) return node
-        if (node.nodes) {
-          for (const child of node.nodes) {
-            const found = findNode(child)
-            if (found) return found
-          }
-        }
-        return null
-      }
-      for (const node of this.tree) {
-        const found = findNode(node)
-        if (found) return found
-      }
-      return null
+
+      this.tree.filter((nodeElt) => node.id === nodeElt.id).map((nodeElt) => {
+        nodeElt.canSelected = node.canSelected
+        nodeElt.isSelected = node.isSelected
+        nodeElt.isGroupe = node.isGroupe
+        nodeElt.nodes = node.nodes
+        nodeElt.type = node.type
+        nodeElt.name = node.name
+      })
+      
+
+      // const findNode = (node: NodeTree): NodeTree | null => {
+      //   if (node.id === id) return node
+      //   if (node.nodes) {
+      //     for (const child of node.nodes) {
+      //       const found = findNode(child)
+      //       if (found) return found
+      //     }
+      //   }
+      //   return null
+      // }
+      // for (const node of this.tree) {
+      //   const found = findNode(node)
+      //   if (found) return found
+      // }
+      // return null
     },
     
 

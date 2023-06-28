@@ -4,7 +4,7 @@
       <li>
         <div class="flex items-center flex-row">
           <img
-            v-if="!hideShow && props.node.nodes"
+            v-if="!hideShow && node.nodes"
             class="h-4 w-4"
             :src="iconeFolderPlus"
             @click.stop="toggleHideShow"
@@ -35,7 +35,7 @@
         <tree-view :node="node" v-for="node in nodeChildren" :key="node.id" />
       </li>
     </ul>
-
+    type : {{ node.type }}
     {{ allChildrenAreSelected }}
   </div>
 </template>
@@ -51,67 +51,58 @@ import { useTreeStore } from '../stores/treeStore'
 
 const hideShow = ref(false)
 const treeStore = useTreeStore()
-const nodeChildren = reactive<NodeTree[]>([])
 
 const props = defineProps<{
   node: NodeTree
 }>()
 
+// on construit les variabler reactive a partir des props
+const node = reactive<NodeTree>(props.node)
+const nodeChildren = reactive<NodeTree[]>([])
+if (props.node.nodes) {
+  for (let i = 0; i < props.node.nodes.length; i++) {
+    console.debug('----props.node.nodes', props.node.nodes)
+    nodeChildren.push(props.node.nodes[i])
+  }
+}
 
- 
-// watch(() => node.isSelected, (newValue, oldValue) => {
-//   console.debug('watch isSelected', newValue, oldValue)
+
+// const isNotType = computed(() => {
+
 // })
-
 function toggleHideShow(): void {
   hideShow.value = !hideShow.value
 }
 
-const allChildrenAreSelected = computed(() => {
 
-  
+console.log('---nodechildren', nodeChildren)
+const allChildrenAreSelected = computed(() => {
   if(nodeChildren.length > 0){
-   
     return nodeChildren.every((node) => node.isSelected)
   }
-  
-  
+  return false
 })
 
-const allChildrenAreUnselected = computed(() => {
-  console.debug('allChildrenAreUnselected', nodeChildren)
-  return nodeChildren.every((node) => !node.isSelected)
-})
+
+
 
 function handleChangeCheckbox(event: Event): void {
   const target = event.target as HTMLInputElement
   const id = target.id
+  console.debug('-----element clique',target)
   const nodeElement = treeStore.getNodebyId(id)
+  console.debug('-----nodeElement',nodeElement)
   if (nodeElement) {
     nodeElement.isSelected = !nodeElement.isSelected
     treeStore.modifyNodeTree(nodeElement, nodeElement.id)
   }
 
-  console.debug('handleChangeCheckbox', id, nodeElement)
-  //checkSelected(id)
+
 }
 
 // Utilisation de la méthode dans votre action handleChangeCheckbox
 
 
-if (props.node.nodes) {
-  for (let i = 0; i < props.node.nodes.length; i++) {
-    nodeChildren.push(props.node.nodes[i])
-  }
-}
-
-nodeChildren.map((node) => {
-  console.debug(`nodeChildren ${node.id}`, node.name)
-})
-
-// const isNotType = computed(() => {
-
-// })
 
 watch(
   () => props.node.isSelected,

@@ -6,16 +6,24 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watchEffect } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 import TreeView from './TreeView.vue'
 import type NodeTree from '../interfaces/nodeTree.interface'
 import { useTreeStore } from '../stores/treeStore'
 
+
 const treeData = reactive<NodeTree[]>([])
 const treeStore = useTreeStore()
 
+const nodeData = reactive<NodeTree[]>(treeStore.treeInit)
+
+
+
+//creation du tableau de references pour les enfants a partir de NodeData
+
+const treeReferences = [] as NodeTree[] // de la taille jsonData.length
 /**
- * recuperation des données du fichier json et initialisation du store
+ * recuperation des données du fichier json
  */
 watchEffect(async () => {
   try {
@@ -25,11 +33,18 @@ watchEffect(async () => {
     }
     const jsonData = await response.json()
     Object.assign(treeData, jsonData) // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
+    Object.assign(nodeData, jsonData) // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
     console.log('test', treeData.length)
 
     treeStore.setTree(treeData)
-    treeStore.setTreeInit(treeData);
+    treeStore.setTreeInit(treeData)
 
+    //creation du tableau de references pour les enfants a partir de NodeData
+    for (let i = 0; i < treeData.length; i++) {
+      treeReferences.push(treeData[i])
+    }
+
+    // console.debug('treeReferences', treeReferences)
   } catch (error) {
     console.error('Erreur :', error)
   }
