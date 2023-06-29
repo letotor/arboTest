@@ -1,6 +1,6 @@
 export * from './assetBrowser.interface'
 export * from './device.interface'
-export * from './nodeTree.interface'
+export * from './nodeTree.interfaceNew'
 export * from './objectSelected'
 export * from './otherDevice.interface'
 export * from './subStation.interface'

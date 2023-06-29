@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Tree View</h1>
-    <tree-view v-for="node in treeData" :key="node.id" :node="node" :selected-node="selectedNode" @node-selected="onNodeSelected"/>
+    <tree-view v-for="node in treeData" :key="node.id" :node="node"/>
   </div>
 </template>
 
@@ -13,10 +13,14 @@ import { useTreeStore } from '../stores/treeStore'
 
 const treeData = reactive<NodeTree[]>([])
 const treeStore = useTreeStore()
-const selectedNode = ref<NodeTree | null>(null);
+
 /**
  * recuperation des données du fichier json et initialisation du store
  */
+
+ const nodeTreeReactive :any = []  ; // tableau de noeud réactif
+ console.log(nodeTreeReactive)
+
 watchEffect(async () => {
   try {
     const response = await fetch('src/data/dataTree.json')
@@ -25,8 +29,11 @@ watchEffect(async () => {
     }
     const jsonData = await response.json()
     Object.assign(treeData, jsonData) // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
-    console.log('test', treeData.length)
-
+    console.log('treeData init', treeData)
+    treeData.map((node) => {
+      nodeTreeReactive.push(reactive<NodeTree>(node))
+    } )
+    console.log('nodeTreeReactive', nodeTreeReactive)
     treeStore.setTree(treeData)
     treeStore.setTreeInit(treeData);
 
@@ -35,9 +42,4 @@ watchEffect(async () => {
   }
 })
 
-
-const onNodeSelected = (node:NodeTree) => {
-  console.debug('selected node parent:', node)
-  selectedNode.value = node;
-};
 </script>

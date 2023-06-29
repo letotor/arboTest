@@ -57,6 +57,12 @@ export const useTreeStore = defineStore('tree', {
       }
       return null
     },
+
+    getNumberNodeSelected(): number {
+     return 0
+
+      }
+    ,
      checkChildren(node: NodeTree): void {
       if (node.isGroupe && node.nodes) {
         for (const child of node.nodes) {
