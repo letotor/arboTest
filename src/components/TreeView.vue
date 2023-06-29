@@ -151,11 +151,11 @@ function changeCanBeDeseleted(node: NodeTree, type: ElementType) {
 
 /**
  *  1- on regarde si le noeud est selectionné
- *  1-1  si selectionner on compte le nombre de noeuf 
+ *  1-1  si selectionner on compte le nombre de isSelected
  * 
  *  2- si le noeud n'est pas selection 
  *  2-1  on compte le nombre de noeud selectionné
- *  2-2  si le nombre de noeud selectionné est égale à 1
+ *  2-2  si le nombre de noeud selectionné est 0
  *  2-3 alors on fait un canBe Selected avec le type egale a tous les type possible
  *  
  * 
