@@ -36,7 +36,6 @@
           :node="childNode"
           v-for="childNode in node.nodes"
           :key="childNode.id"
-          :nodeTreeReactive="nodeTreeReactive"
         />
       </li>
     </ul>
@@ -153,6 +152,10 @@ function toggleNode(event: Event): void {
   const id = target.id
   const nodeElement = treeStore.getNodebyId(id)
   console.debug('nodeElement', nodeElement)
+  treeStore.tree.map((elt) => {
+    changeCanBeDeseleted(elt,'windfarm')
+      //   console.log(countSelectedNodeCheck(elt))
+    })
   
 
   //  treeStore.tree.map(elt =>{
