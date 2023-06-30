@@ -12,8 +12,7 @@ const router = createRouter({
       path: '/treeview',
       name: 'treeView',
       component: () => import('../components/TreeViewRoot.vue')
-    },
-  
+    }
   ]
 })
 

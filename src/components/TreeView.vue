@@ -37,7 +37,6 @@
           v-for="childNode in node.nodes"
           :key="childNode.id"
           :nodeTreeReactive="nodeTreeReactive"
-          
         />
       </li>
     </ul>
@@ -46,13 +45,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed ,watch} from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import TreeView from './TreeView.vue'
 import iconeFolderPlus from '../assets/images/folder-plus-icone8.png'
 import iconeFolderMinus from '../assets/images/folder-open-icone8.png'
 import type NodeTree from '../interfaces/nodeTree.interface'
 import { useTreeStore } from '../stores/treeStore'
-
 
 type ElementType = 'windfarm' | 'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
 
@@ -60,8 +58,8 @@ const hideShow = ref(false)
 const treeStore = useTreeStore()
 
 const props = defineProps<{
-  node: NodeTree,
-  nodeTreeReactive :any  ; 
+  node: NodeTree
+  //nodeTreeReactive :any  ;
   // selectedNode: NodeTree | null
 }>()
 
@@ -72,22 +70,12 @@ const props = defineProps<{
 const nodeChildren = reactive<NodeTree[]>(props.node.nodes || [])
 // On construit les variables réactives à partir des props
 const node = reactive<NodeTree>(props.node)
- 
-
-
 
 console.log('node', node)
-
 
 // node.nodes?.forEach((childNode) => {
 //   console.log('props nodeTreeReactive',props.nodeTreeReactive)
 // })
-
-
-
-
-console.log('nodeTreeReactive Enfant', props.nodeTreeReactive)
-
 
 function toggleHideShow(): void {
   hideShow.value = !hideShow.value
@@ -100,8 +88,6 @@ const allChildrenAreSelected = computed(() => {
   return false
 })
 
-
-
 // function changeCanBeSeleted (node: NodeTree, type: ElementType ){
 //   const nodeChild : NodeTree= node?.nodes;
 //   node.canSelected = node.type === type
@@ -109,59 +95,56 @@ const allChildrenAreSelected = computed(() => {
 //     node.nodes?.forEach((childNode:NodeTree) => {
 //        changeCanBeSeleted(childNode, type)
 //     })
-//   } 
+//   }
 // }
 
-
-
-function changeCanBeSeleted (node: NodeTree, type: ElementType ){
+function changeCanBeSeleted(node: NodeTree, type: ElementType) {
   node.canSelected = node.type === type
-  const nodeChild = node?.nodes;
+  const nodeChild = node?.nodes
   if (nodeChild)
-  nodeChild.map((childNode:NodeTree) => {
-       changeCanBeSeleted(childNode, type)
-})
+    nodeChild.map((childNode: NodeTree) => {
+      changeCanBeSeleted(childNode, type)
+    })
 }
 
-
-
-
-
-
-function countSelectedNodeCheck(node: NodeTree[]): number {
+function countIsSeleted(node: NodeTree[]): number {
   let count = 0
-  
-  return count;
+
+  node.map((node) => {
+    if (node.isSelected) {
+      count++
+    }
+    if (node.nodes) {
+      count += countIsSeleted(node.nodes)
+    }
+  })
+
+  return count
 }
 
 
 function changeCanBeDeseleted(node: NodeTree, type: ElementType) {
   node.canSelected = true
-  const nodeChild = node?.nodes;
+  const nodeChild = node?.nodes
   if (nodeChild)
-  nodeChild.map((childNode:NodeTree) => {
-    changeCanBeDeseleted(childNode, type)
-})
-  
-  
+    nodeChild.map((childNode: NodeTree) => {
+      changeCanBeDeseleted(childNode, type)
+    })
 }
-
-
-
 
 /**
  *  1- on regarde si le noeud est selectionné
  *  1-1  si selectionner on compte le nombre de isSelected
- * 
- *  2- si le noeud n'est pas selection 
+ *
+ *  2- si le noeud n'est pas selection
  *  2-1  on compte le nombre de noeud selectionné
  *  2-2  si le nombre de noeud selectionné est 0
  *  2-3 alors on fait un canBe Selected avec le type egale a tous les type possible
- *  
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
+ *
  * */
 
 function toggleNode(event: Event): void {
@@ -169,28 +152,24 @@ function toggleNode(event: Event): void {
   console.debug('target', target)
   const id = target.id
   const nodeElement = treeStore.getNodebyId(id)
-  let count  = countSelectedNodeCheck(treeStore.tree)
- console.debug('count',count)
-//  treeStore.tree.map(elt =>{
-      // changeCanBeSeleted(elt, nodeElement?.type! )})
+  console.debug('nodeElement', nodeElement)
+  
 
-  if (nodeElement?.isSelected){
+  //  treeStore.tree.map(elt =>{
+  // changeCanBeSeleted(elt, nodeElement?.type! )})
+
+  if (nodeElement?.isSelected) {
     // console.debug('count',count)
     // console.debug('nodeElement.isSelected','oui')
-    
-  }else{
+  } else {
     // console.debug('nodeElement.isSelected','non')
     // console.debug('premiere selection?? ')
-   
 
-    
-    treeStore.tree.map(elt =>{
-      changeCanBeSeleted(elt, nodeElement?.type! )
-   //   console.log(countSelectedNodeCheck(elt))
-  })
-
+    treeStore.tree.map((elt) => {
+      changeCanBeSeleted(elt, nodeElement?.type!)
+      //   console.log(countSelectedNodeCheck(elt))
+    })
   }
- 
 
   treeStore.setSelectNode(nodeElement)
   if (nodeElement) {
@@ -204,15 +183,12 @@ function toggleNode(event: Event): void {
   }
 }
 
-
 watch(node, (newValue, oldValue) => {
   console.debug('test cabeselected')
-  if (treeStore.getSelectedNode?.type===node.type){
+  if (treeStore.getSelectedNode?.type === node.type) {
     treeStore.updateTreeBySame(node)
-  
   }
 })
-  
 </script>
 
 <style scoped lang="scss">

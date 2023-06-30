@@ -1,6 +1,5 @@
 type ElementType = 'windfarm' | 'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
 
-
 export default interface NodeTree {
   id: string
   type?: ElementType
@@ -10,4 +9,3 @@ export default interface NodeTree {
   canSelected: boolean
   nodes?: NodeTree[]
 }
-  

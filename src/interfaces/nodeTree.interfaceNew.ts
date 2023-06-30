@@ -1,11 +1,9 @@
-
-import  nodeData from './nodeData.interface'
+import nodeData from './nodeData.interface'
 
 export default interface NodeTree {
-  nodeData  : nodeData
+  nodeData: nodeData
   isGroupe: boolean
   isSelected: boolean
   canSelected: boolean
-  nodes?: NodeTree[] 
+  nodes?: NodeTree[]
 }
-  

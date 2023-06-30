@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Tree View</h1>
-    <tree-view v-for="node in treeData" :key="node.id" :node="node"/>
+    <tree-view v-for="node in treeData" :key="node.id" :node="node" />
   </div>
 </template>
 
@@ -18,8 +18,8 @@ const treeStore = useTreeStore()
  * recuperation des données du fichier json et initialisation du store
  */
 
- const nodeTreeReactive :any = []  ; // tableau de noeud réactif
- console.log(nodeTreeReactive)
+const nodeTreeReactive: any = [] // tableau de noeud réactif
+console.log(nodeTreeReactive)
 
 watchEffect(async () => {
   try {
@@ -32,14 +32,12 @@ watchEffect(async () => {
     console.log('treeData init', treeData)
     treeData.map((node) => {
       nodeTreeReactive.push(reactive<NodeTree>(node))
-    } )
+    })
     console.log('nodeTreeReactive', nodeTreeReactive)
     treeStore.setTree(treeData)
-    treeStore.setTreeInit(treeData);
-
+    treeStore.setTreeInit(treeData)
   } catch (error) {
     console.error('Erreur :', error)
   }
 })
-
 </script>
