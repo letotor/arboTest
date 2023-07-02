@@ -2,7 +2,7 @@
   {
     "id": "0",
     "type": "windfarm",
-    "name": "WindFarm",
+    "name": "WindFarm Groupe",
     "isGroupe": true,
     "isSelected": false,
     "canSelected": true,
@@ -117,7 +117,7 @@
   {
     "id": "1",
     "type": "windfarm",
-    "name": "windfarm",
+    "name": "windfarm2",
     "isGroupe": true,
     "isSelected": false,
     "canSelected": true,
@@ -228,5 +228,14 @@
         "canSelected": true
       }
     ]
+  },
+  {
+    "id": "2",
+    "type": "pvplant",
+    "name": "PVPlant",
+    "isGroupe": true,
+    "isSelected": false,
+    "canSelected": true
+
   }
 ]

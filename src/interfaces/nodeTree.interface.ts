@@ -1,4 +1,4 @@
-type ElementType = 'windfarm' | 'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
+type ElementType = 'windfarm' | 'pv' |  'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
 
 export default interface NodeTree {
   id: string
@@ -7,5 +7,6 @@ export default interface NodeTree {
   isGroupe: boolean
   isSelected: boolean
   canSelected: boolean
-  nodes?: NodeTree[]
+  nodes?: NodeTree[] | null
 }
+

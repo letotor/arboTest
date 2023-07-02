@@ -13,7 +13,8 @@ export const useTreeStore = defineStore('tree', {
   getters: {
     getTree: (state) => state.tree,
     getSelectedNode: (state) => state.selectedNode,
-    getManySelectedNode: (state) => state.manySelectedNode
+    getManySelectedNode: (state) => state.manySelectedNode,
+
   },
   actions: {
     setTree(tree: NodeTree[]) {
@@ -22,13 +23,33 @@ export const useTreeStore = defineStore('tree', {
     setTreeInit(tree: NodeTree[]) {
       this.treeInit = tree
     },
+  
     setSelectNode(node: NodeTree | null) {
       this.selectedNode = node
     },
     setSelectedNode(nodeId: string): void {
       this.selectedNodeId = nodeId
     },
-
+    findParent(tree: NodeTree[], nodeChildId: string): NodeTree | undefined {
+      for (let i = 0; i < tree.length; i++) {
+        const noeudCourant = tree[i];
+    
+        if (noeudCourant.nodes) {
+          // Recherche récursive dans les enfants
+          const parentEnfant = this.findParent(noeudCourant.nodes, nodeChildId);
+          if (parentEnfant) {
+            return parentEnfant; // Parent trouvé, on le renvoie directement
+          }
+        }
+    
+        if (noeudCourant.nodes?.some(child => child.id === nodeChildId)) {
+          return noeudCourant; // Parent trouvé, on le renvoie directement
+        }
+      }
+    
+      return undefined; // Aucun parent trouvé
+    },
+    
     addSeletedNodeToList(node: NodeTree) {
       this.manySelectedNode.push(node)
     },
@@ -58,8 +79,23 @@ export const useTreeStore = defineStore('tree', {
     },
 
     getNumberNodeSelected(): number {
-      return 0
+      const countIsSelected = (nodes: NodeTree[]): number => {
+        let count = 0;
+        nodes.forEach((node) => {
+          if (node.isSelected) {
+            count++;
+          }
+          if (node.nodes) {
+            count += countIsSelected(node.nodes);
+          }
+        });
+    
+        return count;
+      };
+    
+      return countIsSelected(this.tree);
     },
+    
     checkChildren(node: NodeTree): void {
       if (node.isGroupe && node.nodes) {
         for (const child of node.nodes) {
@@ -78,7 +114,7 @@ export const useTreeStore = defineStore('tree', {
         }
       }
     },
-    updateTreeBySame(node: NodeTree): void {
+    updateTreeBySameType(node: NodeTree): void {
       const nodeType = node.type
       this.tree = this.tree.map((treeNode) => {
         if (treeNode.type !== nodeType) {
@@ -130,10 +166,16 @@ export const useTreeStore = defineStore('tree', {
 
       //reourne le noeud p
     },
-    activeAllNodeByType(type: string) {
+    activeOnlyNodeBySameType(type: NodeTree["type"] | undefined ) {
       this.tree.map((node) => {
         if (node.type === type) {
           node.canSelected = true
+        }
+        else{
+          node.canSelected = false
+        }
+        if (node.nodes) {
+          this.activeOnlyNodeBySameType(node.type)
         }
       })
     }

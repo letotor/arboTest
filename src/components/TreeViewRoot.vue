@@ -1,25 +1,18 @@
 <template>
   <div>
     <h1 class="text-2xl font-bold">Tree View</h1>
-    <tree-view v-for="node in treeData" :key="node.id" :node="node" />
+    <tree class="" v-for="node in treeStore.tree" :key="node.id" :node="node" />
+    <pre><JSON class="stringify">{{treeStore.tree}}</JSON></pre>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watchEffect } from 'vue'
-import TreeView from './TreeView.vue'
+import { reactive, ref, watchEffect , watch } from 'vue'
+import tree from './treeRecursive.vue'
 import type NodeTree from '../interfaces/nodeTree.interface'
 import { useTreeStore } from '../stores/treeStore'
 
-const treeData = reactive<NodeTree[]>([])
 const treeStore = useTreeStore()
-
-/**
- * recuperation des données du fichier json et initialisation du store
- */
-
-const nodeTreeReactive: any = [] // tableau de noeud réactif
-console.log(nodeTreeReactive)
 
 watchEffect(async () => {
   try {
@@ -28,16 +21,11 @@ watchEffect(async () => {
       throw new Error('Erreur lors de la récupération du fichier JSON')
     }
     const jsonData = await response.json()
-    Object.assign(treeData, jsonData) // Met à jour les propriétés de l'objet réactif sans rompre la réactivité
-    console.log('treeData init', treeData)
-    treeData.map((node) => {
-      nodeTreeReactive.push(reactive<NodeTree>(node))
-    })
-    console.log('nodeTreeReactive', nodeTreeReactive)
-    treeStore.setTree(treeData)
-    treeStore.setTreeInit(treeData)
+    treeStore.setTree(jsonData)
   } catch (error) {
     console.error('Erreur :', error)
   }
 })
+
+
 </script>
