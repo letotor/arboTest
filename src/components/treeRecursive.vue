@@ -55,9 +55,9 @@ const toggleHideShow = () => {
 
 
 const toggleNode = () => {
-
+  
   node.isSelected = !node.isSelected
-  console.debug('toggleNode', node.isSelected)
+  console.debug('debut toggleNode apres inversion etat', node.isSelected, 'nombre de noeud selectionné', treeStore.getNumberNodeSelected())
   //node.isSelected = !node.isSelected
   // RG 1 : si un noeud groupe est selectionné, tous les noeuds enfants doivent être sélectionnés
   if (selectAllChild.value === true && node.nodes) {
@@ -81,14 +81,14 @@ const toggleNode = () => {
     })
     }
   
-  // if (node.isSelected && treeStore.getNumberNodeSelected() === 1) {
-  //   console.debug(' premier cas de selection')
-  // }
+  if (node.isSelected && treeStore.getNumberNodeSelected() === 1) {
+    console.debug(' premier cas de selection',treeStore.activeOnlyNodeBySameType('windturbine'))
+  }
   // if (node.nodes && node.isGroupe) {
   //   node.nodes.forEach((childNode) => {
   //     childNode.isSelected = node.isSelected
   //   })
-  //
+  
 
   console.debug('getParent', getParent(node))
   console.debug('selecteAllchild', selectAllChild.value)
@@ -144,6 +144,7 @@ const unSelectAllChild = computed(() => {
 
 
 watch(node, ( oldvalue,newValue) => {
+  console.debug('watch node',oldvalue,newValue)
   // RG : tous les enfants selectionné , le parent doit être selectionné si c'est un groupe
   if(setNodeTrueIfAllChildSelected(node) && node.isGroupe && !node.isSelected){
     node.isSelected = true

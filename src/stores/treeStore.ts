@@ -155,6 +155,7 @@ export const useTreeStore = defineStore('tree', {
 
     activeOnlyNodeBySameType(type: NodeTree["type"] | undefined ) {
       this.tree.map((node) => {
+        if (!node) return
         if (node.type === type) {
           node.canSelected = true
         }
@@ -166,5 +167,6 @@ export const useTreeStore = defineStore('tree', {
         }
       })
     }
+
   }
 })
