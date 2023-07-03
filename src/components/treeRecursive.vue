@@ -6,10 +6,11 @@
         :id="node.id"
         :value="node.name"
         @change="toggleNode"
+     
         :checked="node.isSelected"
         :disabled="!node.canSelected"
       />
-      <label :for="node.id">{{ node.name }}</label>
+      <label :for="node.id"  @dblclick="selectOneItemToView" >{{ node.name }} </label>
 
       <span class="text-green-400" v-if="node.isGroupe"> - groupe - </span>
      <span class="pl-2"> id :{{ node.id }} type : {{ node.type }} selected : {{ node.isSelected }}</span> 
@@ -52,7 +53,9 @@ const toggleHideShow = () => {
   hideShow.value = !hideShow.value
 }
 
+
 const toggleNode = () => {
+
   node.isSelected = !node.isSelected
   console.debug('toggleNode', node.isSelected)
   //node.isSelected = !node.isSelected
@@ -70,24 +73,33 @@ const toggleNode = () => {
   }
 
 
-
-  // //RG3 :
-
-
-
+  // RG 3 : si un noeud est selectionné, tous les autres noeuds doivent être du même type avec canBeSelected = true
+  if(node.isSelected && treeStore.getNumberNodeSelected() > 0){
+    treeStore.tree.forEach((node)=>{
+      console.debug('node',node.type)
+      changeCanBeSeleted(node,node.type)
+    })
+    }
   
-
-
+  // if (node.isSelected && treeStore.getNumberNodeSelected() === 1) {
+  //   console.debug(' premier cas de selection')
+  // }
   // if (node.nodes && node.isGroupe) {
   //   node.nodes.forEach((childNode) => {
   //     childNode.isSelected = node.isSelected
   //   })
   //
+
   console.debug('getParent', getParent(node))
   console.debug('selecteAllchild', selectAllChild.value)
 }
 
+const selectOneItemToView = () => {
+  console.debug('selectOneItemToView', node)
+  // RG : le double click deselectionne tous les autres noeuds et canBeSelected = true 
 
+
+}
 
 const setNodeTrueIfAllChildSelected = (node: NodeTree) => {
   if (node.nodes && node.isGroupe && !node.isSelected) {
@@ -100,6 +112,7 @@ const setNodeTrueIfAllChildSelected = (node: NodeTree) => {
     return false
   }
 }
+
 
 
 function changeCanBeSeleted(node: NodeTree, type: typeof node.type) {
@@ -130,7 +143,6 @@ const unSelectAllChild = computed(() => {
 
 
 
-
 watch(node, ( oldvalue,newValue) => {
   // RG : tous les enfants selectionné , le parent doit être selectionné si c'est un groupe
   if(setNodeTrueIfAllChildSelected(node) && node.isGroupe && !node.isSelected){
@@ -140,14 +152,16 @@ watch(node, ( oldvalue,newValue) => {
   if (node.isGroupe && node.isSelected && node.nodes && node.nodes.some((childNode) => childNode.isSelected == false)){
     node.isSelected = false
   }
-  
 
   // RG : si au moins un noeud selectionné , alors les autre noeud doivent etre du meme type avec canSeleted = true
     // aucun element selectionné
- 
-    if(treeStore.getNumberNodeSelected()===1)
-    console.debug('noeud selection : 1')
 
+ 
+  
+  
+    
+    console.debug('noeud selection : 1')
+    
     // treeStore.tree.forEach((childNode) => {
     //   if (childNode.type === node.type){
     //     childNode.canSelected = true

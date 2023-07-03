@@ -1,4 +1,7 @@
 import NodeTree from '../interfaces/nodeTree.interface'
+type ElementType = 'windfarm' | 'pv' |  'windturbine' | 'substation' | 'lidar' | 'meter' | 'RTU' | 'GWE'
+
+
 
 function countIsSeleted(node: NodeTree[]): number {
   let count = 0
@@ -24,7 +27,7 @@ function findParent(tree: NodeTree[], nodeChildId: string): NodeTree | undefined
       // Recherche récursive dans les enfants
       const parentEnfant = findParent(noeudCourant.nodes, nodeChildId);
       if (parentEnfant) {
-        return parentEnfant; // Parent trouvé, on le renvoie directement
+        return parentEnfant; 
       }
     }
 
@@ -36,25 +39,33 @@ function findParent(tree: NodeTree[], nodeChildId: string): NodeTree | undefined
   return undefined; // Aucun parent trouvé
 }
 
+function  getAllItemIsSelected(nodeArray : NodeTree[]) : NodeTree[]{
+  let returnArray : NodeTree[] = []
+  // RG  uniquement les items qui ne sont pas des groupe et qui sont sélectionnés
+  nodeArray.map((node)=>{
+    if(node.isSelected && !node.isGroupe){
+      returnArray.push(node)
+    }
+    if(node.nodes){
+      returnArray = returnArray.concat(getAllItemIsSelected(node.nodes))
+    }
+  })
 
-// function pour retrouver le parent d'un node en fonction de son id
-// function findParent(node: NodeTree[], id: string): NodeTree | null {
-//   let parent: NodeTree | null = null
-//
-//   node.map((node) => {
-//     if (node.id === id) {
-//       parent = node
-//     }
-//     if (node.nodes) {
-//       parent = findParent(node.nodes, id)
-//     }
-//   })
-//
-//   return parent
-// }
+  return returnArray
 
+}
 
+function updateAllCanSelectedByType(nodeArray:NodeTree[], type : ElementType) {
+  for (const item of nodeArray) {
+    if (item.type !== type) {
+      item.canSelected = false;
+    }else{
+      item.canSelected = true;
+    }
+    if (item.nodes) {
+      updateAllCanSelectedByType(item.nodes,type);
+    }
+  }
+}
 
-
-
-export  {countIsSeleted,findParent}
+export  {countIsSeleted,findParent,getAllItemIsSelected,updateAllCanSelectedByType}

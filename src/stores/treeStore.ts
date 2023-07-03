@@ -14,6 +14,7 @@ export const useTreeStore = defineStore('tree', {
     getTree: (state) => state.tree,
     getSelectedNode: (state) => state.selectedNode,
     getManySelectedNode: (state) => state.manySelectedNode,
+    
 
   },
   actions: {
@@ -137,22 +138,6 @@ export const useTreeStore = defineStore('tree', {
           nodeElt.type = node.type
           nodeElt.name = node.name
         })
-
-      // const findNode = (node: NodeTree): NodeTree | null => {
-      //   if (node.id === id) return node
-      //   if (node.nodes) {
-      //     for (const child of node.nodes) {
-      //       const found = findNode(child)
-      //       if (found) return found
-      //     }
-      //   }
-      //   return null
-      // }
-      // for (const node of this.tree) {
-      //   const found = findNode(node)
-      //   if (found) return found
-      // }
-      // return null
     },
 
     desactiveAllNodeByType(type: string) {
@@ -166,6 +151,8 @@ export const useTreeStore = defineStore('tree', {
 
       //reourne le noeud p
     },
+
+
     activeOnlyNodeBySameType(type: NodeTree["type"] | undefined ) {
       this.tree.map((node) => {
         if (node.type === type) {

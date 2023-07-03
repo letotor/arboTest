@@ -1,4 +1,6 @@
-type ElementType = 'windfarm' | 'pv' |  'windturbine' | 'lidar' | 'meter' | 'RTU' | 'GWE'
+type ElementType = 'windfarm' | 'pv' |  'windturbine' | 'substation' | 'lidar' | 'meter' | 'RTU' | 'GWE'
+
+
 
 export default interface NodeTree {
   id: string
