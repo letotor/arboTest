@@ -115,58 +115,41 @@ export const useTreeStore = defineStore('tree', {
         }
       }
     },
-    updateTreeBySameType(node: NodeTree): void {
-      const nodeType = node.type
-      this.tree = this.tree.map((treeNode) => {
-        if (treeNode.type !== nodeType) {
-          return { ...treeNode, canSelected: false }
-        } else {
-          return { ...treeNode, canSelected: true }
+
+
+     activeOnlyNodeBySameType(typeDevice: NodeTree['type']) {
+      this.tree.map((elt) => {
+        if (elt) {
+          return changeCanBeSeleted(elt, typeDevice)
+        }
+        function changeCanBeSeleted(node: NodeTree, type: NodeTree['type']) {
+          node.canSelected = node.type === type
+          const nodeChild = node?.nodes
+          if (nodeChild)
+            nodeChild.map((childNode: NodeTree) => {
+              changeCanBeSeleted(childNode, type)
+            })
         }
       })
-    },
 
-    //reourne le noeud p
-    modifyNodeTree(node: NodeTree, id: string) {
-      this.tree
-        .filter((nodeElt) => node.id === nodeElt.id)
-        .map((nodeElt) => {
-          nodeElt.canSelected = node.canSelected
-          nodeElt.isSelected = node.isSelected
-          nodeElt.isGroupe = node.isGroupe
-          nodeElt.nodes = node.nodes
-          nodeElt.type = node.type
-          nodeElt.name = node.name
-        })
-    },
-
-    desactiveAllNodeByType(type: string) {
-      console.debug('desactiveAllNodeByType0', this.tree)
-      this.tree
-        .filter((node) => node.type !== type)
-        .map((node) => {
-          node.canSelected = false
-        })
-      console.debug('desactiveAllNodeByType1', this.tree)
-
-      //reourne le noeud p
-    },
-
-
-    activeOnlyNodeBySameType(type: NodeTree["type"] | undefined ) {
-      this.tree.map((node) => {
-        if (!node) return
-        if (node.type === type) {
-          node.canSelected = true
+     },
+    
+     
+     activeAllNodeByAllType() {
+      this.tree.map((elt) => {
+        if (elt) {
+          return changeCanBeSeleted(elt)
         }
-        else{
-          node.canSelected = false
+        function changeCanBeSeleted(node: NodeTree) {
+          node.canSelected =true
+          const nodeChild = node?.nodes
+          if (nodeChild)
+            nodeChild.map((childNode: NodeTree) => {
+              changeCanBeSeleted(childNode)
+            })
         }
-        if (node.nodes) {
-          this.activeOnlyNodeBySameType(node.type)
-        }
-      })
-    }
-
+      })}
+     
+  
   }
 })
