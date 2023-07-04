@@ -7,9 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watchEffect , watch } from 'vue'
+import {  watchEffect  } from 'vue'
 import tree from './treeRecursive.vue'
-import type NodeTree from '../interfaces/nodeTree.interface'
 import { useTreeStore } from '../stores/treeStore'
 
 const treeStore = useTreeStore()

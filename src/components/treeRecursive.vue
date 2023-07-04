@@ -10,16 +10,16 @@
         :checked="node.isSelected"
         :disabled="!node.canSelected"
       />
+      <span class="flex flex-row" @click.stop="toggleHideShow">
+        <img v-if="node.nodes" :src="imageFolder" alt="imageFolder" class="w-6 h-6" />
+      </span>
       <label :for="node.id">{{ node.name }} </label>
 
-      <span class="text-green-400" v-if="node.isGroupe"> - groupe - </span>
+      <span style="color: #856afc" v-if="node.isGroupe"> - groupe - </span>
       <span class="pl-2">
         id :{{ node.id }} type : {{ node.type }} selected : {{ node.isSelected }}</span
       >
-      <span class="flex flex-row" @click.stop="toggleHideShow">
-        {{ node.canSelected }}
-        <img v-if="node.nodes" :src="imageFolder" alt="turbine" class="w-6 h-6" />
-      </span>
+      
     </div>
 
     <div v-if="node.nodes && hideShow">
@@ -36,9 +36,8 @@ import { ref, reactive, computed, watch } from 'vue'
 import type NodeTree from '../interfaces/nodeTree.interface'
 import tree from './treeRecursive.vue'
 import { useTreeStore } from '../stores/treeStore'
-import image from '@/assets/images/folder-plus-icone8.png'
-import imagePlus from '@/assets/images/folder.png'
-import { Console } from 'console'
+import imagePlus from '@/assets/images/folder-plus-icone8.png'
+import imageMinus from '@/assets/images/folder-open-icone8.png'
 
 const props = defineProps<{
   node: NodeTree
@@ -52,8 +51,8 @@ const toggleHideShow = () => {
   hideShow.value = !hideShow.value
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const toggleNode = (e: Event) => {
-  const target = e.target as HTMLInputElement
   node.isSelected = !node.isSelected
   console.debug(
     'debut toggleNode apres inversion etat',
@@ -90,11 +89,9 @@ const toggleNode = (e: Event) => {
     treeStore.activeAllNodeByAllType()
   }
 
-
   console.debug('getParent', getParent(node))
   console.debug('selecteAllchild', selectAllChild.value)
 }
-
 
 
 // Gestion du double click
@@ -102,8 +99,6 @@ const selectOneItemToView = () => {
   console.debug('selectOneItemToView', node)
   // RG : le double click deselectionne tous les autres noeuds et canBeSelected = true
 }
-
-
 
 const setNodeTrueIfAllChildSelected = (node: NodeTree) => {
   if (node.nodes && node.isGroupe && !node.isSelected) {
@@ -133,6 +128,18 @@ const unSelectAllChild = computed(() => {
   }
 })
 
+const imageFolder = computed(() => {
+  if(node.nodes){
+    if (!hideShow.value) {
+    return imagePlus
+    } else {
+    return imageMinus
+  }
+  }
+  return ''
+})
+
+
 watch(node, (oldvalue, newValue) => {
   console.debug('watch node', oldvalue, newValue)
   // RG : tous les enfants selectionné , le parent doit être selectionné si c'est un groupe
@@ -148,43 +155,10 @@ watch(node, (oldvalue, newValue) => {
   ) {
     node.isSelected = false
   }
-
   // RG : si au moins un noeud selectionné , alors les autre noeud doivent etre du meme type avec canSeleted = true
   // aucun element selectionné
 
   console.debug('noeud selection : 1')
-
-  // treeStore.tree.forEach((childNode) => {
-  //   if (childNode.type === node.type){
-  //     childNode.canSelected = true
-  //     node.canSelected  = true
-  //   }
-  // })
-  // if(treeStore.getNumberNodeSelected()>1){
-  //   treeStore.tree.forEach((childNode) => {
-  //     if (childNode.type !== node.type){
-  //       childNode.canSelected = false
-  //     }
-  //   })
-  // }
-  // if(treeStore.getNumberNodeSelected()===1){
-})
-
-// const changeCanBeSeleted = (node: NodeTree, type: typeof node.type) => {
-//   node.canSelected = node.type === type
-//   const nodeChild = node?.nodes
-//   if (nodeChild)
-//     nodeChild.map((childNode: NodeTree) => {
-//       changeCanBeSeleted(childNode, type)
-//     })
-// }
-
-const imageFolder = computed(() => {
-  if (node.nodes && hideShow) {
-    return imagePlus
-  } else {
-    return image
-  }
 })
 
 function getParent(node: NodeTree): NodeTree | undefined {
@@ -195,10 +169,10 @@ function getParent(node: NodeTree): NodeTree | undefined {
 <style scoped>
 .children {
   padding-left: 20px;
-  border-left: 1px dotted greenyellow;
+  border-left: 1px dotted #856afc;
 }
 .tiret {
-  border-top: 1px dotted greenyellow;
+  border-top: 1px dotted #856afc;
 
   position: relative;
   width: 15px;
